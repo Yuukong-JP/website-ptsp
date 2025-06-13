@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Intro Animasi</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      height: 100%;
+      font-family: sans-serif;
+      overflow: hidden;
+    }
+
+    #intro {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: #006400;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10;
+      flex-direction: column;
+    }
+
+    #logo-pemko {
+      width: 150px;
+      opacity: 0;
+      transition: opacity 1s ease;
+    }
+
+    #logo-stack {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+      opacity: 0;
+      transition: opacity 1s ease;
+    }
+
+    #logo-mpp, #logo-dpmptsp {
+      width: auto;
+      height: 90px;
+      opacity: 0;
+    }
+
+    .slide-in-from-right {
+      animation: slideFromRight 1s forwards;
+    }
+
+    .slide-in-from-left {
+      animation: slideFromLeft 1s forwards;
+    }
+
+    @keyframes slideFromRight {
+      from {
+        transform: translateX(200px);
+        opacity: 0;
+      }
+      to {
+        transform: translateX(0);
+        opacity: 1;
+      }
+    }
+
+    @keyframes slideFromLeft {
+      from {
+        transform: translateX(-200px);
+        opacity: 0;
+      }
+      to {
+        transform: translateX(0);
+        opacity: 1;
+      }
+    }
+
+    #intro.fade-out {
+      animation: curtainUp 1s ease forwards;
+    }
+
+    @keyframes curtainUp {
+      0% {
+        transform: translateY(0%);
+      }
+      100% {
+        transform: translateY(-100%);
+      }
+    }
+
+    #white-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: white;
+      opacity: 0;
+      z-index: 20;
+      pointer-events: none;
+      transition: opacity 0.8s ease;
+    }
+
+    #white-screen.visible {
+      opacity: 1;
+    }
+  </style>
+</head>
+<body>
+  <div id="intro">
+    <img src="assets/img/logo-pemko.png" id="logo-pemko" />
+    <div id="logo-stack">
+      <img src="assets/img/logo-mpp.png" id="logo-mpp" />
+      <img src="assets/img/logo-dpmptsp.png" id="logo-dpmptsp" />
+    </div>
+  </div>
+
+  <div id="white-screen"></div>
+
+  <script>
+    const intro = document.getElementById('intro');
+    const logoPemko = document.getElementById('logo-pemko');
+    const logoStack = document.getElementById('logo-stack');
+    const logoMPP = document.getElementById('logo-mpp');
+    const logoDPMPTSP = document.getElementById('logo-dpmptsp');
+    const whiteScreen = document.getElementById('white-screen');
+
+    // 1. Tampilkan logo Pemko
+    setTimeout(() => {
+      logoPemko.style.opacity = 1;
+    }, 500);
+
+    // 2. Hilangkan logo Pemko
+    setTimeout(() => {
+      logoPemko.style.opacity = 0;
+    }, 2000);
+
+    // 3. Tampilkan logo-stack dan animasi masuk
+    setTimeout(() => {
+      logoStack.style.opacity = 1;
+      logoMPP.classList.add('slide-in-from-right');
+      logoDPMPTSP.classList.add('slide-in-from-left');
+    }, 2800);
+
+    // 4. Fade out logo-stack
+    setTimeout(() => {
+      logoStack.style.opacity = 0;
+    }, 4500);
+
+    // 5. Tirai hijau naik
+    setTimeout(() => {
+      intro.classList.add('fade-out');
+    }, 5000);
+
+    // 7. Redirect setelah white fade selesai
+    setTimeout(() => {
+      window.location.href = "index.html";
+      intro.classList.add('fade-in');
+    }, 5800);
+  </script>
+</body>
+</html>
